@@ -181,6 +181,8 @@ spec:
         app.kubernetes.io/component: backend
     spec:
       automountServiceAccountToken: false
+      imagePullSecrets:
+        - name: ghcr-secret
       tolerations:
         - key: "karpenter.sh/disrupted"
           operator: "Exists"
@@ -200,7 +202,7 @@ spec:
               echo "DB is ready!"
       containers:
         - name: backend
-          image: ghcr.io/iam-veeramalla/Jerney/jerney-backend:75da1da
+          image: ghcr.io/alokp000/jerney-backend:latest
           ports:
             - containerPort: 5000
               protocol: TCP
@@ -301,13 +303,15 @@ spec:
         app.kubernetes.io/component: frontend
     spec:
       automountServiceAccountToken: false
+      imagePullSecrets:
+        - name: ghcr-secret
       tolerations:
         - key: "karpenter.sh/disrupted"
           operator: "Exists"
           effect: "NoSchedule"
       containers:
         - name: frontend
-          image: ghcr.io/iam-veeramalla/Jerney/jerney-frontend:75da1da
+          image: ghcr.io/alokp000/jerney-frontend:latest
           ports:
             - containerPort: 8080
               protocol: TCP
